@@ -140,4 +140,4 @@ def main(player):
     # position 37, u roll a 12 now ur position = 49
     if pos>39:
         pos-=40
-    
+        player.wallet=player.wallet+200
