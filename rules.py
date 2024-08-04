@@ -1,10 +1,13 @@
+from random import randint
+
 class player():
-    def __init__(self, no, wallet=1500, places=None, cards=None, jailed=0):
+    def __init__(self, no, wallet=1500, places=None, cards=None, jailed=0, position=0):
         self.no=no
         self.wallet=wallet
         self.places=places
         self.cards=cards
         self.jailed=jailed
+        self.position=position
 
 class place():
     def __init__(self, name, no, color, rent, cost,houses=0, owner=None):
@@ -127,3 +130,9 @@ while not (6>=num_pl>=2):
         num_pl=int(input("Number of players (2-6):"))
     except:
         pass
+
+def main(player):
+    die1=randint(1,6)
+    die2=randint(1,6)
+    roll = die1+die2
+    if 
