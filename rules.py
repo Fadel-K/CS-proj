@@ -120,6 +120,10 @@ monopoly_board = {
 }
 
 
-num_pl=int(input("Number of players (2-6):"))
-while not 6>num_pl>2:
-    num_pl=int(input("Number of players (2-6):"))
+num_pl=0
+
+while not (6>=num_pl>=2):
+    try:
+        num_pl=int(input("Number of players (2-6):"))
+    except:
+        pass
