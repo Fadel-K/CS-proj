@@ -150,4 +150,6 @@ def main(player):
     place_v = map[pos]
     
     if place_v=="community":
-        
+        with open('comm.csv', mode='r') as comm:
+            f1=csv.readef(comm, delimeter='~')
+            
