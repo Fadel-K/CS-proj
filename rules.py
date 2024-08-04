@@ -151,5 +151,6 @@ def main(player):
     
     if place_v=="community":
         with open('comm.csv', mode='r') as comm:
-            f1=csv.readef(comm, delimeter='~')
+            f1=csv.reader(comm, delimeter='~')
+            no=randint(1,17)
             
