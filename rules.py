@@ -6,7 +6,7 @@ class player():
         self.no=no
         self.wallet=wallet
         self.places=places
-        self.cards=cards
+        self.cards=card
         self.jailed=jailed
         self.position=position
 
