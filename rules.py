@@ -89,11 +89,13 @@ monopoly_board = {
     1: old_kent_road,
     2: "community",
     3: whitechapel_road,
+    4: "income tax",
     5: kings_cross_station,
     6: the_angel_islington,
     7: "chance",
     8: euston_road,
     9: pentonville_road,
+    10: "Visiting Jail",
     11: pall_mall,
     12: electric_company,
     13: whitehall,
@@ -103,6 +105,7 @@ monopoly_board = {
     17: "community",
     18: marlborough_street,
     19: vine_street,
+    20: "Free Parking",
     21: strand,
     22: "chance",
     23: fleet_street,
@@ -112,6 +115,7 @@ monopoly_board = {
     27: coventry_street,
     28: water_works,
     29: piccadilly,
+    30: "Go to Jail",
     31: regent_street,
     32: oxford_street,
     33: "community",
@@ -141,3 +145,5 @@ def main(player):
     if pos>39:
         pos-=40
         player.wallet=player.wallet+200
+
+    
