@@ -150,7 +150,16 @@ def main(player):
     place_v = map[pos]
     
     if place_v=="community":
-        with open('comm.csv', mode='r') as comm:
-            f1=csv.reader(comm, delimeter='~')
-            no=randint(1,17)
+        no=randint(1,16)
+        comm_log(no)
+    elif place_v=="chance":
+        no=randint(1,16)
+        chance_log(no)
+    elif place_v
+            
+def comm_log(no):
+    with open ('comm.csv','r') as comm:
+        f1=csv.reader(comm)
+        if no=1:
+            
             
