@@ -85,7 +85,7 @@ liverpool_street_station = station("Liverpool Street Station", 35, 25, 200)
 electric_company = utility("Electric Company", 12, 150)
 water_works = utility("Water Works", 28, 150)
 
-monopoly_board = {
+map = {
     1: old_kent_road,
     2: "community",
     3: whitechapel_road,
@@ -146,4 +146,7 @@ def main(player):
         pos-=40
         player.wallet=player.wallet+200
 
+    place_v = map[pos]
     
+    if place_v=="community":
+        
