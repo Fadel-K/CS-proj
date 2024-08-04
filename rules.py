@@ -1,4 +1,5 @@
 from random import randint
+import csv
 
 class player():
     def __init__(self, no, wallet=1500, places=None, cards=None, jailed=0, position=0):
