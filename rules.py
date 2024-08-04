@@ -118,3 +118,8 @@ monopoly_board = {
     37: park_lane,
     39: mayfair
 }
+
+
+num_pl=int(input("Number of players (2-6):"))
+while not 6>num_pl>2:
+    num_pl=int(input("Number of players (2-6):"))
