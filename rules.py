@@ -2,7 +2,7 @@ from random import randint
 import csv
 
 class player():
-    def __init__(self, no, wallet=1500, places=None, cards=None, jailed=0, position=0):
+    def __init__(self, no, wallet=1500, places=None, card=None, jailed=0, position=0):
         self.no=no
         self.wallet=wallet
         self.places=places
@@ -136,16 +136,18 @@ while not (6>=num_pl>=2):
     except:
         print("Only whole numbers")
 print(num_pl, "Playing! Have fun")
-def main(player):
+
+
+def main(person):
     die1=randint(1,6)
     die2=randint(1,6)
     roll = die1+die2
-    pos = player.position
+    pos = person.position
     pos+=roll
     # position 37, u roll a 12 now ur position = 49
     if pos>39:
         pos-=40
-        player.wallet=player.wallet+200
+        person.wallet=person.wallet+200
 
     place_v = map[pos]
     
@@ -155,11 +157,47 @@ def main(player):
     elif place_v=="chance":
         no=randint(1,16)
         chance_log(no)
-    elif place_v
-            
-def comm_log(no):
+    elif isinstance(place_v, place):
+        if place_v.owner==None:
+            inp = input("Do you want to buy this property for £", place_v.cost,'\n', "Input yes/no", sep='')
+            if inp=='yes':
+                if person.wallet>place_v.cost:
+                    person.wallet=person.wallet-place_v.cost
+                    
+                
+            elif inp=='no':
+                print("Sorry to see you go!")
+def comm_log(no,person):
     with open ('comm.csv','r') as comm:
-        f1=csv.reader(comm)
-        if no=1:
+        cr=csv.reader(comm)
+        if no==1:
+            print(cr[0])
+            person.position=0
+            person.wallet=person.wallet+200
+        elif no==2:
+            person.wallet=person.wallet+200
+        elif no==3:
+            person.wallet=person.wallet-50
+        elif no==4:
+            person.wallet=person.wallet+50
+        elif no==5:
+            person.card=True
+        elif no==6:
+            person.position=10
+            person.jail=True
+        elif no==7:
+            person.wallet=person.wallet+100
+        elif no==8:
+            person.wallet=person.waller+50
+        elif no==9:
+            person.wallet=person.wallet+10*num_pl
+        elif no==10:
+            person.wallet
+            
+        
+            
+
+
+
             
             
