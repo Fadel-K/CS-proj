@@ -2,7 +2,7 @@ from random import randint
 import csv
 
 class player():
-    def __init__(self, no, wallet=1500, places=None, card=None, jailed=0, position=0):
+    def __init__(self, no, wallet=1500, places=[], card=None, jailed=0, position=0):
         self.no=no
         self.wallet=wallet
         self.places=places
@@ -163,7 +163,11 @@ def main(person):
             if inp=='yes':
                 if person.wallet>place_v.cost:
                     person.wallet=person.wallet-place_v.cost
-                    
+                    person.places.append(place_v)
+                    place_v.owner=person
+                    print("Purchase successful")
+                else:
+                    print("Dont have enough to buy")
                 
             elif inp=='no':
                 print("Sorry to see you go!")
@@ -192,7 +196,12 @@ def comm_log(no,person):
         elif no==9:
             person.wallet=person.wallet+10*num_pl
         elif no==10:
-            person.wallet
+            person.wallet=person.wallet+100
+        elif no==11:
+            person.wallet=person.wallet-100
+        elif no==12:
+            person.wallet=
+            
             
         
             
