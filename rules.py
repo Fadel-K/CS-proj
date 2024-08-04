@@ -179,28 +179,54 @@ def comm_log(no,person):
             person.position=0
             person.wallet=person.wallet+200
         elif no==2:
+            print(cr[1])
             person.wallet=person.wallet+200
         elif no==3:
+            print(cr[2])
             person.wallet=person.wallet-50
         elif no==4:
+            print(cr[3])
             person.wallet=person.wallet+50
         elif no==5:
+            print(cr[4])
             person.card=True
         elif no==6:
+            print(cr[5])
             person.position=10
             person.jail=True
         elif no==7:
+            print(cr[6])
             person.wallet=person.wallet+100
         elif no==8:
+            print(cr[7])
             person.wallet=person.waller+50
         elif no==9:
+            print(cr[8])
             person.wallet=person.wallet+10*num_pl
         elif no==10:
+            print(cr[9])
             person.wallet=person.wallet+100
         elif no==11:
+            print(cr[10])
             person.wallet=person.wallet-100
         elif no==12:
-            person.wallet=
+            print(cr[11])
+            person.wallet=person.wallet-50
+        elif no==13:
+            print(cr[12])
+            person.wallet=person.wallet+25
+        elif no==14:
+            print(cr[13])
+        elif no==15:
+            print(cr[14])
+            person.wallet=person.wallet+10
+        elif no==16:
+            print(cr[15])
+            person.wallet=person.wallet+100
+        #14th street repair fee per house and hotel
+
+
+
             
             
         
