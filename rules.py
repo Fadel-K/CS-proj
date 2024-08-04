@@ -129,10 +129,15 @@ while not (6>=num_pl>=2):
     try:
         num_pl=int(input("Number of players (2-6):"))
     except:
-        pass
-
+        print("Only whole numbers")
+print(num_pl, "Playing! Have fun")
 def main(player):
     die1=randint(1,6)
     die2=randint(1,6)
     roll = die1+die2
-    if 
+    pos = player.position
+    pos+=roll
+    # position 37, u roll a 12 now ur position = 49
+    if pos>39:
+        pos-=40
+    
