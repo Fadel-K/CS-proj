@@ -175,23 +175,30 @@ def main(per, roll = True):
     elif place_v=="community":
         no=randint(1,16)
         comm_log(no)
+        
     elif place_v=="chance":
         no=randint(1,16)
         chance_log(no)
+        
     elif place_v=="income tax":
         print("Pay 200")
         per.wallet=per.wallet-200
+        
     elif place_v=="super tax":
         print("Pay 100")
         per.wallet=per.wallet-100
+        
     elif place_v=="Visiting Jail":
         print("Visiting Jail")
+        
     elif place_v=="Free Parking":
         print("Free Parking")
+        
     elif place_v=="Go to Jail":
         print("Go to Jail")
         per.position=10
         per.jailed=3
+        
     elif isinstance(place_v, place):
         if place_v.owner==None:
             inp = input("Do you want to buy this property for £", place_v.cost,'\n', "Input yes/no", sep='')
@@ -268,7 +275,6 @@ def main(per, roll = True):
         elif place_v.owner==per:
             print("Your own property")
         else:
-            print("you have to pay £", place_v.rent,"to player", place_v.owner.no)
             ut=0
             uts=[]
             if electric_company.owner==place_v.owner:
@@ -281,6 +287,7 @@ def main(per, roll = True):
                 rent=roll*4
             else:
                 rent=roll*10
+            print("you have to pay £", rent,"to player", place_v.owner.no)
             per.wallet=per.wallet-rent
             place_v.owner.wallet=place_v.owner.wallet+rent
         
