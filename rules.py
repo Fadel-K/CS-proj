@@ -124,6 +124,7 @@ map = {
     35: liverpool_street_station,
     36: "chance",
     37: park_lane,
+    38: "super tax",
     39: mayfair
 }
 
@@ -138,16 +139,16 @@ while not (6>=num_pl>=2):
 print(num_pl, "Playing! Have fun")
 
 
-def main(person):
+def main(per):
     die1=randint(1,6)
     die2=randint(1,6)
     roll = die1+die2
-    pos = person.position
+    pos = per.position
     pos+=roll
     # position 37, u roll a 12 now ur position = 49
     if pos>39:
         pos-=40
-        person.wallet=person.wallet+200
+        per.wallet=per.wallet+200
 
     place_v = map[pos]
     
@@ -157,74 +158,118 @@ def main(person):
     elif place_v=="chance":
         no=randint(1,16)
         chance_log(no)
+    elif place_v=="income tax":
+        print("Pay 200")
+        per.wallet=per.wallet-200
+    elif place_v=="super tax":
+        print("Pay 100")
+        per.wallet=per.wallet-100
     elif isinstance(place_v, place):
         if place_v.owner==None:
             inp = input("Do you want to buy this property for £", place_v.cost,'\n', "Input yes/no", sep='')
             if inp=='yes':
-                if person.wallet>place_v.cost:
-                    person.wallet=person.wallet-place_v.cost
-                    person.places.append(place_v)
-                    place_v.owner=person
+                if per.wallet>place_v.cost:
+                    per.wallet=per.wallet-place_v.cost
+                    per.places.append(place_v)
+                    place_v.owner=per
                     print("Purchase successful")
                 else:
                     print("Dont have enough to buy")
                 
             elif inp=='no':
                 print("Sorry to see you go!")
-        elif place_v.owner==person:
+        elif place_v.owner==per:
             print("Your own property")
         else:
             print("you have to pay £", place_v.rent,"to player", place_v.owner.no)
-            person.wallet=person.wallet-place_v.rent
+            per.wallet=per.wallet-place_v.rent
+            place_v.owner.wallet=place_v.owner.wallet+place_v.rent
+    elif isinstance(place_v,station):
+        if place_v.owner==None:
+            inp = input("Do you want to buy this property for £", place_v.cost,'\n', "Input yes/no", sep='')
+            if inp=='yes':
+                if per.wallet>place_v.cost:
+                    per.wallet=per.wallet-place_v.cost
+                    per.places.append(place_v)
+                    place_v.owner=per
+                    print("Purchase successful")
+                    st=0
+                    sts=[]
+                    if kings_cross_station.owner==per:
+                        st+=1
+                        sts.append(kings_cross_station.owner)
+                    if marylebone_station.owner==per:
+                        st+=1
+                        sts.append(marylebone_station)
+                    if fenchurch_st_station.owner==per:
+                        st+=1
+                        sts.append(fenchurch_st_station)
+                    if liverpool_street_station.owner==per:
+                        st+=1
+                        sts.append(liverpool_street_station)
+                    rent=25*2**(st-1)
+                    for station in sts:
+                        station.rent=rent
+                else:
+                    print("Dont have enough to buy")
+
+            elif inp=='no':
+                print("Sorry to see you go!")
+        elif place_v.owner==per:
+            print("Your own property")
+        else:
+            print("you have to pay £", place_v.rent,"to player", place_v.owner.no)
+            per.wallet=per.wallet-place_v.rent
             place_v.owner.wallet=place_v.owner.wallet+place_v.rent
         
-def comm_log(no,person):
+        
+def comm_log(no,per):
     with open ('comm.csv','r') as comm:
         cr=csv.reader(comm)
         if no==1:
             print(cr[0])
-            person.position=0
-            person.wallet=person.wallet+200
+            per.position=0
+            per.wallet=per.wallet+200
         elif no==2:
             print(cr[1])
-            person.wallet=person.wallet+200
+            per.wallet=per.wallet+200
         elif no==3:
             print(cr[2])
-            person.wallet=person.wallet-50
+            per.wallet=per.wallet-50
         elif no==4:
             print(cr[3])
-            person.wallet=person.wallet+50
+            per.wallet=per.wallet+50
         elif no==5:
             print(cr[4])
-            person.card=True
+            per.card=True
         elif no==6:
             print(cr[5])
-            person.position=10
-            person.jail=True
+            per.position=10
+            per.jail=True
         elif no==7:
             print(cr[6])
-            person.wallet=person.wallet+100
+            per.wallet=per.wallet+100
         elif no==8:
             print(cr[7])
-            person.wallet=person.waller+50
+            per.wallet=per.waller+50
         elif no==9:
             print(cr[8])
-            person.wallet=person.wallet+10*num_pl
+            per.wallet=per.wallet+10*num_pl
         elif no==10:
             print(cr[9])
-            person.wallet=person.wallet+100
+            per.wallet=per.wallet+100
         elif no==11:
             print(cr[10])
-            person.wallet=person.wallet-100
+            per.wallet=per.wallet-100
         elif no==12:
             print(cr[11])
-            person.wallet=person.wallet-50
+            per.wallet=per.wallet-50
         elif no==13:
             print(cr[12])
-            person.wallet=person.wallet+25
+            per.wallet=per.wallet+25
         elif no==14:
             print(cr[13])
-            st = (person.position//10) + 1
+            st = (per.position//10) + 1
             hs=ht=0
             for i in range((st-1)*10,st*10):
                 place_v=map[i]
@@ -237,37 +282,64 @@ def comm_log(no,person):
             print("Amount to pay:", amount)
         elif no==15:
             print(cr[14])
-            person.wallet=person.wallet+10
+            per.wallet=per.wallet+10
         elif no==16:
             print(cr[15])
-            person.wallet=person.wallet+100
+            per.wallet=per.wallet+100
 
-def chance_log(no,person):
+def chance_log(no,per):
     with open ('chance.csv','r') as comm:
         cr=csv.reader(comm)
         if no==1:
             print(cr[0])
-            person.position=0
-            person.wallet=person.wallet+200
+            per.position=0
+            per.wallet=per.wallet+200
         elif no==2:
             print(cr[1])
-            if person.position<24:
-                person.position=24
-            elif person.position>24:
-                person.position=24
-                person.wallet=person.wallet+200
+            if per.position<24:
+                per.position=24
+            elif per.position>24:
+                per.position=24
+                per.wallet=per.wallet+200
         elif no==3:
             print(cr[2])
-            person.position=39
+            per.position=39
         elif no==4:
             print(cr[3])
-            if person.position<11:
-                person.position=11
-            elif person.position>11:
-                person.position=11
-                person.wallet=person.wallet+200
+            if per.position<11:
+                per.position=11
+            elif per.position>11:
+                per.position=11
+                per.wallet=per.wallet+200
         elif no==5:
             print(cr[4])
-            
-
-                        
+            if per.position<10:
+                per.position=5
+            elif per.position<20:
+                per.poition=15
+            elif per.position<30:
+                per.position=25
+            elif per.position<40:
+                per.position=35
+        elif no==6:
+            print(cr[5])
+            if per.positon<10:
+                per.position=12
+            elif per.position>20 and per.positon<30:
+                per.position=28
+        elif no==7:
+            print(cr[6])
+            per.wallet=per.wallet+50
+        elif no==8:
+            print(cr[7])
+            per.card=True
+        elif no==9:
+            print(cr[8])
+            per.position=per.position-3
+        elif no==10:
+            print(cr[9])
+            per.position=10
+            per.jailed=3
+        elif no==11:
+            print(cr[10])
+            if len(per.places)>0:
