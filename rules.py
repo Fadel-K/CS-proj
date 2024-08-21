@@ -207,6 +207,7 @@ def main(per, roll = True):
             print("you have to pay £", place_v.rent,"to player", place_v.owner.no)
             per.wallet=per.wallet-place_v.rent
             place_v.owner.wallet=place_v.owner.wallet+place_v.rent
+            
     elif isinstance(place_v,station):
         if place_v.owner==None:
             inp = input("Do you want to buy this property for £", place_v.cost,'\n', "Input yes/no", sep='')
@@ -220,7 +221,7 @@ def main(per, roll = True):
                     sts=[]
                     if kings_cross_station.owner==per:
                         st+=1
-                        sts.append(kings_cross_station.owner)
+                        sts.append(kings_cross_station)
                     if marylebone_station.owner==per:
                         st+=1
                         sts.append(marylebone_station)
@@ -236,6 +237,36 @@ def main(per, roll = True):
                 else:
                     print("Dont have enough to buy")
 
+            elif inp=='no':
+                print("Sorry to see you go!")
+        elif place_v.owner==per:
+            print("Your own property")
+        else:
+            print("you have to pay £", place_v.rent,"to player", place_v.owner.no)
+            per.wallet=per.wallet-place_v.rent
+            place_v.owner.wallet=place_v.owner.wallet+place_v.rent
+            
+    elif isinstance(place_v, utility):
+        if place_v.owner==None:
+            inp = input("Do you want to buy this property for £", place_v.cost,'\n', "Input yes/no", sep='')
+            if inp=='yes':
+                if per.wallet>place_v.cost:
+                    per.wallet=per.wallet-place_v.cost
+                    per.places.append(place_v)
+                    place_v.owner=per
+                    print("Purchase successful")
+                    ut=0
+                    uts=[]
+                    if electric_company.owner==per:
+                        ut+=1
+                        uts.append(electric_company)
+                    if water_works.owner==per:
+                        ut+=1
+                        uts.append(water_works)
+                    
+                else:
+                    print("Dont have enough to buy")
+                
             elif inp=='no':
                 print("Sorry to see you go!")
         elif place_v.owner==per:
@@ -382,7 +413,12 @@ def chance_log(no,per):
             elif per.poition>5:
                 per.poition=5
                 per.wallet=per.wallet+200
-        elif no==1
-            
-        
+        elif no==14:
+            print(cr[13])
+            if num_pl>1:
+                per.wallet=per.wallet-50*num_pl
+        elif no==15:
+            print(cr[14])
+            per.wallet=per.wallet
+150        
             
