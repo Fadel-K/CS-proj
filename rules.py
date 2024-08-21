@@ -255,15 +255,6 @@ def main(per, roll = True):
                     per.places.append(place_v)
                     place_v.owner=per
                     print("Purchase successful")
-                    ut=0
-                    uts=[]
-                    if electric_company.owner==per:
-                        ut+=1
-                        uts.append(electric_company)
-                    if water_works.owner==per:
-                        ut+=1
-                        uts.append(water_works)
-                    
                 else:
                     print("Dont have enough to buy")
                 
@@ -273,8 +264,20 @@ def main(per, roll = True):
             print("Your own property")
         else:
             print("you have to pay £", place_v.rent,"to player", place_v.owner.no)
-            per.wallet=per.wallet-place_v.rent
-            place_v.owner.wallet=place_v.owner.wallet+place_v.rent
+            ut=0
+            uts=[]
+            if electric_company.owner==place_v.owner:
+                ut+=1
+                uts.append(electric_company)
+            if water_works.owner==place_v.owner:
+                ut+=1
+                uts.append(water_works)
+            if len(uts)==1:
+                rent=roll*4
+            else:
+                rent=roll*10
+            per.wallet=per.wallet-rent
+            place_v.owner.wallet=place_v.owner.wallet+rent
         
         
 def comm_log(no,per):
@@ -419,6 +422,5 @@ def chance_log(no,per):
                 per.wallet=per.wallet-50*num_pl
         elif no==15:
             print(cr[14])
-            per.wallet=per.wallet
-150        
-            
+            per.wallet=per.wallet+150
+150            
