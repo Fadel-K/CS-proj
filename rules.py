@@ -11,7 +11,7 @@ class player():
         self.position=position
 
 class place():
-    def __init__(self, name, no, color, rent, cost,houses=0, owner=None):
+    def __init__(self, name, no, color, rent, cost, houses=0, owner=None):
         self.name = name
         self.no = no
         self.houses = houses
@@ -173,7 +173,10 @@ def main(person):
                 print("Sorry to see you go!")
         elif place_v.owner==person:
             print("Your own property")
-            
+        else:
+            print("you have to pay £", place_v.rent,"to player", place_v.owner.no)
+            person.wallet=person.wallet-place_v.rent
+            place_v.owner.wallet=place_v.owner.wallet+place_v.rent
         
 def comm_log(no,person):
     with open ('comm.csv','r') as comm:
@@ -253,4 +256,18 @@ def chance_log(no,person):
             elif person.position>24:
                 person.position=24
                 person.wallet=person.wallet+200
-        
+        elif no==3:
+            print(cr[2])
+            person.position=39
+        elif no==4:
+            print(cr[3])
+            if person.position<11:
+                person.position=11
+            elif person.position>11:
+                person.position=11
+                person.wallet=person.wallet+200
+        elif no==5:
+            print(cr[4])
+            
+
+                        
