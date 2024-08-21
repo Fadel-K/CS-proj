@@ -287,7 +287,7 @@ def main(per, rolling = True):
         
 def comm_log(no,per):
     with open ('comm.csv','r') as comm:
-        cr=csv.reader(comm)
+        cr=list(csv.reader(comm))
         if no==1:
             print(cr[0])
             per.position=0
@@ -351,7 +351,7 @@ def comm_log(no,per):
 
 def chance_log(no,per):
     with open ('chance.csv','r') as comm:
-        cr=csv.reader(comm)
+        cr=list(csv.reader(comm))
         if no==1:
             print(cr[0])
             per.position=0
@@ -363,6 +363,7 @@ def chance_log(no,per):
             elif per.position>24:
                 per.position=24
                 per.wallet=per.wallet+200
+            main(per, False)
         elif no==3:
             print(cr[2])
             per.position=39
