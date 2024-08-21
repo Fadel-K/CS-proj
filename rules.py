@@ -128,17 +128,6 @@ map = {
     39: mayfair
 }
 
-
-num_pl=0
-
-while not (6>=num_pl>=2):
-    try:
-        num_pl=int(input("Number of players (2-6):"))
-    except:
-        print("Only whole numbers")
-print(num_pl, "Playing! Have fun")
-
-
 def main(per, roll = True):
     
     if roll:
@@ -435,3 +424,23 @@ def chance_log(no,per):
         elif no==15:
             print(cr[14])
             per.wallet=per.wallet+150
+            
+            
+
+num_pl=0
+
+while not (6>=num_pl>=2):
+    try:
+        num_pl=int(input("Number of players (2-6):"))
+    except:
+        print("Only whole numbers")
+print(num_pl, "Playing! Have fun")
+
+while True:
+    player1=player()
+    player2=player()
+    for i in range(2):
+        if i==0:
+            main(player1)
+        else:
+            main(player2)
