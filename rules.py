@@ -128,9 +128,9 @@ map = {
     39: mayfair
 }
 
-def main(per, roll = True):
+def main(per, rolling = True):
     
-    if roll:
+    if rolling:
         die1=randint(1,6)
         die2=randint(1,6)
         roll = die1+die2
@@ -140,8 +140,12 @@ def main(per, roll = True):
         if pos>39:
             pos-=40
             per.wallet=per.wallet+200
-
+    print(roll)
     place_v = map[pos]
+    if isinstance(place_v,str):
+        print(place_v)
+    else:
+        print(place_v.name)
     if per.jailed>0:
         if per.jailed>1:
             inp=input("Would you like to pay or roll dice")
@@ -163,11 +167,11 @@ def main(per, roll = True):
             
     elif place_v=="community":
         no=randint(1,16)
-        comm_log(no)
+        comm_log(no,per)
         
     elif place_v=="chance":
         no=randint(1,16)
-        chance_log(no)
+        chance_log(no,per)
         
     elif place_v=="income tax":
         print("Pay 200")
@@ -190,7 +194,7 @@ def main(per, roll = True):
         
     elif isinstance(place_v, place):
         if place_v.owner==None:
-            inp = input("Do you want to buy this property for £", place_v.cost,'\n', "Input yes/no", sep='')
+            inp = input(f'Do you want to buy this property for £ {place_v.cost} \n Input yes/no')
             if inp=='yes':
                 if per.wallet>place_v.cost:
                     per.wallet=per.wallet-place_v.cost
@@ -209,7 +213,7 @@ def main(per, roll = True):
             per.wallet=per.wallet-place_v.rent
             place_v.owner.wallet=place_v.owner.wallet+place_v.rent
             
-    elif isinstance(place_v,station):
+    elif isinstance(place_v, station):
         if place_v.owner==None:
             inp = input("Do you want to buy this property for £", place_v.cost,'\n', "Input yes/no", sep='')
             if inp=='yes':
@@ -233,8 +237,8 @@ def main(per, roll = True):
                         st+=1
                         sts.append(liverpool_street_station)
                     rent=25*2**(st-1)
-                    for station in sts:
-                        station.rent=rent
+                    for stat in sts:
+                        stat.rent=rent
                 else:
                     print("Dont have enough to buy")
 
@@ -437,8 +441,8 @@ while not (6>=num_pl>=2):
 print(num_pl, "Playing! Have fun")
 
 while True:
-    player1=player()
-    player2=player()
+    player1=player(1)
+    player2=player(2)
     for i in range(2):
         if i==0:
             main(player1)
