@@ -423,4 +423,3 @@ def chance_log(no,per):
         elif no==15:
             print(cr[14])
             per.wallet=per.wallet+150
-150            
