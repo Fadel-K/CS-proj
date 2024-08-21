@@ -167,6 +167,11 @@ def main(per, roll = True):
                     print("Success")
                 else:
                     print("Unsuccessful")
+        else:
+            print("Your last chance, payment is compulsory")
+            per.wallet=per.wallet-50
+            per.jailed=0
+            
     elif place_v=="community":
         no=randint(1,16)
         comm_log(no)
