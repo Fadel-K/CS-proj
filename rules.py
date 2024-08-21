@@ -171,6 +171,10 @@ def main(person):
                 
             elif inp=='no':
                 print("Sorry to see you go!")
+        elif place_v.owner!=person:
+            print("Your own property")
+        elif
+        
 def comm_log(no,person):
     with open ('comm.csv','r') as comm:
         cr=csv.reader(comm)
@@ -217,6 +221,18 @@ def comm_log(no,person):
             person.wallet=person.wallet+25
         elif no==14:
             print(cr[13])
+            st = (person.position+1)//10
+            ra=[(st-1)*10,st*10]
+            hs=ht=0
+            for i in ra:
+                place_v=map[i]
+                if isinstance(place_v,place):
+                    if place_v.houses<=4:
+                        hs+=place_v.houses
+                    else:
+                        ht+=1
+            amount=40*hs+115*ht
+            print("Amount to pay:", amount)
         elif no==15:
             print(cr[14])
             person.wallet=person.wallet+10
@@ -225,14 +241,17 @@ def comm_log(no,person):
             person.wallet=person.wallet+100
         #14th street repair fee per house and hotel
 
-
-
+def chance_log(no,person):
+    with open ('chance.csv','r') as comm:
+        cr=csv.reader(comm)
+        if no==1:
+            print(cr[0])
+            person.position=0
+            person.wallet=person.wallet+200
+        elif no==2:
+            print(cr[1])
+            if person.position<24:
+                person.position=24
+            elif person
             
-            
-        
-            
-
-
-
-            
-            
+                    
