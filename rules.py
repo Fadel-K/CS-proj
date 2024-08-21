@@ -139,20 +139,35 @@ while not (6>=num_pl>=2):
 print(num_pl, "Playing! Have fun")
 
 
-def main(per):
-    die1=randint(1,6)
-    die2=randint(1,6)
-    roll = die1+die2
-    pos = per.position
-    pos+=roll
-    # position 37, u roll a 12 now ur position = 49
-    if pos>39:
-        pos-=40
-        per.wallet=per.wallet+200
+def main(per, roll = True):
+    
+    if roll:
+        die1=randint(1,6)
+        die2=randint(1,6)
+        roll = die1+die2
+        pos = per.position
+        pos+=roll
+        # position 37, u roll a 12 now ur position = 49
+        if pos>39:
+            pos-=40
+            per.wallet=per.wallet+200
 
     place_v = map[pos]
-    
-    if place_v=="community":
+    if per.jailed>0:
+        if per.jailed>1:
+            inp=input("Would you like to pay or roll dice")
+            if inp=="pay":
+                per.wallet=per.wallet-50
+                per.jailed=0
+            else:
+                print("Rolling")
+                d1=randint(1,6)
+                d2=randint(1,6)
+                if d1==d2:
+                    print("Success")
+                else:
+                    print("Unsuccessful")
+    elif place_v=="community":
         no=randint(1,16)
         comm_log(no)
     elif place_v=="chance":
@@ -164,6 +179,14 @@ def main(per):
     elif place_v=="super tax":
         print("Pay 100")
         per.wallet=per.wallet-100
+    elif place_v=="Visiting Jail":
+        print("Visiting Jail")
+    elif place_v=="Free Parking":
+        print("Free Parking")
+    elif place_v=="Go to Jail":
+        print("Go to Jail")
+        per.position=10
+        per.jailed=3
     elif isinstance(place_v, place):
         if place_v.owner==None:
             inp = input("Do you want to buy this property for £", place_v.cost,'\n', "Input yes/no", sep='')
@@ -342,4 +365,24 @@ def chance_log(no,per):
             per.jailed=3
         elif no==11:
             print(cr[10])
-            if len(per.places)>0:
+            for places in per.places:
+                h=t=0
+                if h<5:
+                    h+=places.houses
+                else:
+                    t+=1
+            per.wallet=per.wallet-h*25 - t*100
+        elif no==12:
+            print(cr[11])
+            per.wallet=per.wallet-15
+        elif no==13:
+            print(cr[12])
+            if per.position<5:
+                per.position=5
+            elif per.poition>5:
+                per.poition=5
+                per.wallet=per.wallet+200
+        elif no==1
+            
+        
+            
