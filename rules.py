@@ -431,8 +431,25 @@ def chance_log(no,per):
             per.wallet=per.wallet+150       
 
 def start(per):
-    color={'br':}
-    for i in per.places:
+    houses=[]
+    col={'Brown':0, 'Light Blue':0, 'Pink':0, 'Orange':0, 'Red':0, 'Yellow':0, 'Green':0, 'Dark Blue':0}
+    
+    for pla in per.places:
+        col[pla.color]=col[pla.color]+1
+    
+    for k,v in col:
+        if k in ['Brown', 'Dark Blue']:
+            if v==2:
+                houses.append(v)
+        else:
+            if v==3:
+                houses.append(v)
+    
+    if len(houses)>0:
+        inp=input(f'Would you like to place houses or roll dice? (input "houses" for houses and "dice" for rolling dice): ')
+        sleep(2)
+    
+    
         
 
 num_pl=0
@@ -470,17 +487,15 @@ while True:
             start(player2)
         elif i==2:
             print(f"Player {i+1}'s turn")
-            start(player2)
+            start(player3)
         elif i==3:
             print(f"Player {i+1}'s turn")
-            start(player2)
+            start(player4)
         elif i==4:
             print(f"Player {i+1}'s turn")
-            start(player2)
+            start(player5)
         elif i==5:
             print(f"Player {i+1}'s turn")
-            start(player2)
-        elif i==6:
-            print(f"Player {i+1}'s turn")
-            start(player2)
+            start(player6)
+        
 
