@@ -95,6 +95,7 @@ electric_company = utility("Electric Company", 12, 150)
 water_works = utility("Water Works", 28, 150)
 
 map = {
+    0: "GO",
     1: old_kent_road,
     2: "community",
     3: whitechapel_road,
@@ -146,31 +147,10 @@ def main(per, rolling = True):
             per.jailed=3
             return
         doubles=False
-        if rolling:
-            die1=randint(1,6)
-            die2=randint(1,6)
-            print(f"Die 1: {die1}, Die 2: {die2}")
-            sleep(1)
-            if die1==die2:
-                print("DOUBLES!!!")
-                doubles=True
-                d+=1
-            roll = die1+die2
-            print(f"Total: {roll}")
-            pos = per.position
-            pos+=roll
-            # position 37, u roll a 12 now ur position = 49
-            if pos>39:
-                pos-=40
-                per.wallet=per.wallet+200
-            print(f'Rolled a {roll}')
-            sleep(2)
-        place_v = map[pos]
-        if not isinstance(place_v, str):
-            print(place_v.name)
-            
+        
         if per.jailed>0:
             if per.jailed>1:
+                rolling=False
                 inp=input("Would you like to pay or roll dice: ")
                 if inp=="pay":
                     per.wallet=per.wallet-50
@@ -187,21 +167,50 @@ def main(per, rolling = True):
                 print("Your last chance, payment is compulsory")
                 per.wallet=per.wallet-50
                 per.jailed=0
+        
+        pos = per.position
+        if rolling:
+            die1=randint(1,6)
+            die2=randint(1,6)
+            print(f"Die 1: {die1}, Die 2: {die2}")
+            sleep(1)
+            if die1==die2:
+                print("DOUBLES!!!")
+                doubles=True
+                d+=1
+            roll = die1+die2
+            print(f"Total: {roll}")
+            pos+=roll
+            # position 37, u roll a 12 now ur position = 49
+            if pos>39:
+                pos-=40
+                per.wallet=per.wallet+200
+                print("Passed GO! Recieve £200")
+            
+            per.position=pos
+            print(f'Rolled a {roll}')
+            sleep(2)
+        
+        place_v = map[pos]
+        if not isinstance(place_v, str):
+            print(place_v.name)
                 
-        elif place_v=="community":
+        if place_v=="community":
+            print("Community Chest")
             no=randint(1,16)
             comm_log(no,per)
             
         elif place_v=="chance":
-            no=randint(1,16)
+            print("Chance Card")
+            no=randint(1,15)
             chance_log(no,per)
             
         elif place_v=="income tax":
-            print("Pay 200")
+            print("Income tax: Pay 200")
             per.wallet=per.wallet-200
             
         elif place_v=="super tax":
-            print("Pay 100")
+            print("Super Tax: Pay 100")
             per.wallet=per.wallet-100
             
         elif place_v=="Visiting Jail":
@@ -233,8 +242,8 @@ def main(per, rolling = True):
                 print("Your own property")
             else:
                 print("you have to pay £", place_v.rent[place_v.houses],"to player", place_v.owner.no)
-                per.wallet=per.wallet-place_v.rent
-                place_v.owner.wallet=place_v.owner.wallet+place_v.rent
+                per.wallet=per.wallet-place_v.rent[place_v.houses]
+                place_v.owner.wallet=place_v.owner.wallet+place_v.rent[place_v.houses]
                 
         elif isinstance(place_v, station):
             if place_v.owner==None:
@@ -439,12 +448,13 @@ def chance_log(no,per):
             main(per,False)
         elif no==11:
             print(cr[10])
+            h=t=0
             for places in per.places:
-                h=t=0
-                if h<5:
-                    h+=places.houses
-                else:
-                    t+=1
+                if isinstance(places, place):
+                    if places.houses<5:
+                        h+=places.houses
+                    else:
+                        t+=1
             per.wallet=per.wallet-h*25 - t*100
         elif no==12:
             print(cr[11])
@@ -470,15 +480,16 @@ def start(per):
     col={'Brown':0, 'Light Blue':0, 'Pink':0, 'Orange':0, 'Red':0, 'Yellow':0, 'Green':0, 'Dark Blue':0}
     
     for pla in per.places:
-        col[pla.color]=col[pla.color]+1
+        if isinstance(pla, place):
+            col[pla.color]=col[pla.color]+1
     
-    for k,v in col:
+    for k,v in col.items():
         if k in ['Brown', 'Dark Blue']:
             if v==2:
-                houses.append(v)
+                houses.append(k)
         else:
             if v==3:
-                houses.append(v)
+                houses.append(k)
     inp='dice'
     if len(houses)>0:
         inp=input(f'Would you like to place houses or roll dice? (input "houses" for houses and "dice" for rolling dice): ')
@@ -489,7 +500,7 @@ def start(per):
         inp=input(f'Choose which color you want to add houses to {houses}: ')
         places=[]
         for i in place.list:
-            if i.color==inp:
+            if i.color==inp and inp in houses:
                 places.append(i)
         print(f'Choose which place do you want to add houses to: ')
         for i in places:
@@ -532,42 +543,42 @@ while True:
     for i in range(num_pl):
         if i==0:
             if not player1.bankruptcy: 
-                print(f"Player {i+1}'s turn") 
+                print(f"\n Player {i+1}'s turn") 
                 start(player1)
                 if player1.wallet<0:
                     print("Player 1 Has Gone Bankrupt!!!")
                     player1.bankruptcy=True
         elif i==1:
             if not player2.bankruptcy: 
-                print(f"Player {i+1}'s turn") 
+                print(f"\n Player {i+1}'s turn") 
                 start(player2)
                 if player2.wallet<0:
                     print("Player 2 Has Gone Bankrupt!!!")
                     player2.bankruptcy=True
         elif i==2:
             if not player3.bankruptcy: 
-                print(f"Player {i+1}'s turn") 
+                print(f"\n Player {i+1}'s turn") 
                 start(player3)
                 if player3.wallet<0:
                     print("Player 3 Has Gone Bankrupt!!!")
                     player3.bankruptcy=True
         elif i==3:
             if not player4.bankruptcy: 
-                print(f"Player {i+1}'s turn") 
+                print(f"\n Player {i+1}'s turn") 
                 start(player4)
                 if player4.wallet<0:
                     print("Player 4 Has Gone Bankrupt!!!")
                     player4.bankruptcy=True
         elif i==4:
             if not player5.bankruptcy: 
-                print(f"Player {i+1}'s turn") 
+                print(f"\n Player {i+1}'s turn") 
                 start(player5)
                 if player5.wallet<0:
                     print("Player 5 Has Gone Bankrupt!!!")
                     player5.bankruptcy=True
         elif i==5:
             if not player6.bankruptcy: 
-                print(f"Player {i+1}'s turn") 
+                print(f"\n Player {i+1}'s turn") 
                 start(player6)
                 if player6.wallet<0:
                     print("Player 6 Has Gone Bankrupt!!!")
