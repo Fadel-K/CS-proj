@@ -148,7 +148,7 @@ def main(per, rolling = True):
         print(place_v.name)
     if per.jailed>0:
         if per.jailed>1:
-            inp=input("Would you like to pay or roll dice")
+            inp=input("Would you like to pay or roll dice: ")
             if inp=="pay":
                 per.wallet=per.wallet-50
                 per.jailed=0
@@ -215,7 +215,7 @@ def main(per, rolling = True):
             
     elif isinstance(place_v, station):
         if place_v.owner==None:
-            inp = input("Do you want to buy this property for £", place_v.cost,'\n', "Input yes/no", sep='')
+            inp = input("Do you want to buy this property for £", place_v.cost,'\n', "Input yes/no: ", sep='')
             if inp=='yes':
                 if per.wallet>place_v.cost:
                     per.wallet=per.wallet-place_v.cost
@@ -428,9 +428,7 @@ def chance_log(no,per):
                 per.wallet=per.wallet-50*num_pl
         elif no==15:
             print(cr[14])
-            per.wallet=per.wallet+150
-            
-            
+            per.wallet=per.wallet+150       
 
 num_pl=0
 
@@ -446,6 +444,8 @@ while True:
     player2=player(2)
     for i in range(2):
         if i==0:
+            print(f"Player {i+1}'s turn")
             main(player1)
         else:
+            print(f"Player {i+1}'s turn")
             main(player2)
