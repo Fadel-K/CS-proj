@@ -1,5 +1,6 @@
 from random import randint
 import csv
+from time import sleep
 
 class player():
     def __init__(self, no, wallet=1500, places=[], card=None, jailed=0, position=0):
@@ -129,7 +130,6 @@ map = {
 }
 
 def main(per, rolling = True):
-    
     if rolling:
         die1=randint(1,6)
         die2=randint(1,6)
@@ -140,12 +140,12 @@ def main(per, rolling = True):
         if pos>39:
             pos-=40
             per.wallet=per.wallet+200
-    print(roll)
+        print(f'Rolled a {roll}')
+        sleep(2)
     place_v = map[pos]
-    if isinstance(place_v,str):
-        print(place_v)
-    else:
+    if not isinstance(place_v, str):
         print(place_v.name)
+        
     if per.jailed>0:
         if per.jailed>1:
             inp=input("Would you like to pay or roll dice: ")
@@ -194,7 +194,7 @@ def main(per, rolling = True):
         
     elif isinstance(place_v, place):
         if place_v.owner==None:
-            inp = input(f'Do you want to buy this property for £ {place_v.cost} \n Input yes/no')
+            inp = input(f'Do you want to buy this property for £ {place_v.cost} \n Input yes/no: ')
             if inp=='yes':
                 if per.wallet>place_v.cost:
                     per.wallet=per.wallet-place_v.cost
@@ -215,7 +215,7 @@ def main(per, rolling = True):
             
     elif isinstance(place_v, station):
         if place_v.owner==None:
-            inp = input("Do you want to buy this property for £", place_v.cost,'\n', "Input yes/no: ", sep='')
+            inp = input(f"Do you want to buy this property for £ {place_v.cost} \n Input yes/no: ")
             if inp=='yes':
                 if per.wallet>place_v.cost:
                     per.wallet=per.wallet-place_v.cost
@@ -253,7 +253,7 @@ def main(per, rolling = True):
             
     elif isinstance(place_v, utility):
         if place_v.owner==None:
-            inp = input("Do you want to buy this property for £", place_v.cost,'\n', "Input yes/no", sep='')
+            inp = input(f"Do you want to buy this property for £ {place_v.cost}\n Input yes/no: ")
             if inp=='yes':
                 if per.wallet>place_v.cost:
                     per.wallet=per.wallet-place_v.cost
@@ -283,7 +283,7 @@ def main(per, rolling = True):
             print("you have to pay £", rent,"to player", place_v.owner.no)
             per.wallet=per.wallet-rent
             place_v.owner.wallet=place_v.owner.wallet+rent
-        
+    sleep(2)
         
 def comm_log(no,per):
     with open ('comm.csv','r') as comm:
@@ -430,6 +430,11 @@ def chance_log(no,per):
             print(cr[14])
             per.wallet=per.wallet+150       
 
+def start(per):
+    color={'br':}
+    for i in per.places:
+        
+
 num_pl=0
 
 while not (6>=num_pl>=2):
@@ -439,13 +444,43 @@ while not (6>=num_pl>=2):
         print("Only whole numbers")
 print(num_pl, "Playing! Have fun")
 
+player1=player(1)
+player2=player(2)
+player3=player(3)
+player4=player(4)
+player5=player(5)
+player6=player(6)
+
+if num_pl<6:
+    del player6
+    if num_pl<5:
+        del player5
+        if num_pl<4:
+            del player4
+            if num_pl<3:
+                del player3
 while True:
-    player1=player(1)
-    player2=player(2)
-    for i in range(2):
+    sleep(2)
+    for i in range(num_pl):
         if i==0:
+            print(f"Player {i+1}'s turn") 
+            start(player1)
+        elif i==1:
             print(f"Player {i+1}'s turn")
-            main(player1)
-        else:
+            start(player2)
+        elif i==2:
             print(f"Player {i+1}'s turn")
-            main(player2)
+            start(player2)
+        elif i==3:
+            print(f"Player {i+1}'s turn")
+            start(player2)
+        elif i==4:
+            print(f"Player {i+1}'s turn")
+            start(player2)
+        elif i==5:
+            print(f"Player {i+1}'s turn")
+            start(player2)
+        elif i==6:
+            print(f"Player {i+1}'s turn")
+            start(player2)
+
