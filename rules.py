@@ -4,10 +4,10 @@ from time import sleep
 
 class player():
     list=[]
-    def __init__(self, no, wallet=1500, places=[], card=None, bankruptcy=False, jailed=0, position=0):
+    def __init__(self, no, wallet=1500, card=None, bankruptcy=False, jailed=0, position=0):
         self.no=no
         self.wallet=wallet
-        self.places=places
+        self.places=[]
         self.cards=card
         self.jailed=jailed
         self.position=position
@@ -149,6 +149,10 @@ def main(per, rolling = True):
         doubles=False
         
         if per.jailed>0:
+            if per.card==True:
+                per.jailed=0
+                print("Used get out of jail free card")
+                per.card=False
             if per.jailed>1:
                 rolling=False
                 inp=input("Would you like to pay or roll dice: ")
@@ -161,6 +165,7 @@ def main(per, rolling = True):
                     d2=randint(1,6)
                     if d1==d2:
                         print("Success")
+                        per.jailed=0
                     else:
                         print("Unsuccessful")
             else:
@@ -538,8 +543,27 @@ if num_pl<6:
             del player4
             if num_pl<3:
                 del player3
+congrats='''
+
+
+░█████╗░░█████╗░███╗░░██╗░██████╗░██████╗░░█████╗░████████╗░██████╗
+██╔══██╗██╔══██╗████╗░██║██╔════╝░██╔══██╗██╔══██╗╚══██╔══╝██╔════╝
+██║░░╚═╝██║░░██║██╔██╗██║██║░░██╗░██████╔╝███████║░░░██║░░░╚█████╗░
+██║░░██╗██║░░██║██║╚████║██║░░╚██╗██╔══██╗██╔══██║░░░██║░░░░╚═══██╗
+╚█████╔╝╚█████╔╝██║░╚███║╚██████╔╝██║░░██║██║░░██║░░░██║░░░██████╔╝
+░╚════╝░░╚════╝░╚═╝░░╚══╝░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░
+
+'''
 while True:
     sleep(2)
+    pl=[]
+    for i in player.list:
+        if not i.bankruptcy:
+            pl.append(i)
+    if pl<2:
+        print(congrats)
+        print(f'Player {pl[0].no} has WON!!!')
+        break
     for i in range(num_pl):
         if i==0:
             if not player1.bankruptcy: 
